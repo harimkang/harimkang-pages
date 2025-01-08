@@ -36,7 +36,19 @@ jobs:
           echo "Checking .web directory structure:"
           ls -R .web/
           mkdir -p dist
-          cp -r .web/* dist/
+          cp -r .web/_next dist/
+          cp -r .web/static dist/
+          cp .web/404.html dist/ || true
+          if [ ! -f .web/index.html ]; then
+            cp .web/_next/server/pages/index.html dist/index.html || true
+          else
+            cp .web/index.html dist/
+          fi
+          if [ ! -f dist/404.html ]; then
+            cp dist/index.html dist/404.html || true
+          fi
+          echo "Final dist directory structure:"
+          ls -R dist/
           
       - name: Setup Pages
         uses: actions/configure-pages@v4
