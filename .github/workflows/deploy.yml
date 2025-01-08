@@ -37,7 +37,8 @@ jobs:
           echo "Checking .web/_static directory structure:"
           ls -R .web/_static/
           
-          # 모든 파일을 dist로 복사
+          # dist 디렉토리 생성 후 파일 복사
+          mkdir -p dist
           cp -r .web/_static/* dist/
           
           echo "Final dist structure:"
