@@ -34,17 +34,11 @@ jobs:
         run: |
           reflex export --frontend-only --no-zip
           
-          echo "Checking .web directory structure:"
-          ls -R .web/
+          echo "Checking .web/_static directory structure:"
+          ls -R .web/_static/
           
-          # Next.js 빌드 파일들을 올바른 위치로 복사
-          mkdir -p dist/_next
+          # 모든 파일을 dist로 복사
           cp -r .web/_static/* dist/
-          cp -r .web/.next/* dist/_next/
-          
-          # manifest 파일들도 복사
-          cp .web/.next/static/*/*.js dist/_next/static/ || true
-          cp .web/.next/static/*/*.css dist/_next/static/ || true
           
           echo "Final dist structure:"
           ls -R dist/
