@@ -34,31 +34,13 @@ jobs:
         run: |
           reflex export --frontend-only --no-zip
           
-          echo "Checking .web directory structure:"
-          ls -la .web/
-          echo "\nChecking .web/.next directory:"
-          ls -la .web/.next || true
-          
-          echo "Creating dist directory..."
-          mkdir -p dist
-          
-          # _static 디렉토리의 내용물 복사
-          echo "Copying _static files..."
-          cp -r .web/_static/* dist/
-          
-          # .next 디렉토리 복사
-          echo "Copying .next directory..."
-          mkdir -p dist/.next
-          cp -r .web/.next/* dist/.next/ || true
-          
-          # 빌드된 파일 구조 확인
-          echo "Final dist structure:"
-          ls -R dist/
+          echo "Checking build output structure:"
+          ls -R .web/_static/
           
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'dist'
+          path: '.web/_static'
           
       - name: Deploy to GitHub Pages
         id: deployment
