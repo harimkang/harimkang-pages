@@ -5,6 +5,6 @@ config = rx.Config(
     base_path="/harimkang-pages",
     frontend_only=True,
     build_path=".web",
-    static_dir=".web/_static",
+    static_dir="public",
     env=rx.Env.PROD,
 )

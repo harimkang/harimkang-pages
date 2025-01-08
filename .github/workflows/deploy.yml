@@ -36,26 +36,26 @@ jobs:
           echo "Checking build output..."
           ls -R .web/_static/
           
-          # Next.js 빌드 결과물을 _static 디렉토리로 복사
-          echo "Copying Next.js build files..."
-          cp -r .web/_next .web/_static/ || true
-          cp -r .web/static .web/_static/ || true
+          echo "Creating dist directory..."
+          mkdir -p dist
           
-          # index.html이 있는지 확인하고 필요한 경우 복사
-          if [ ! -f .web/_static/index.html ]; then
-            echo "Copying index.html..."
-            cp .web/index.html .web/_static/ || true
-          fi
+          # 모든 정적 파일들을 올바른 경로로 복사
+          echo "Copying static files..."
+          cp -r .web/_static/* dist/
+          cp -r .web/_next dist/
+          cp -r .web/static dist/ || true
           
-          echo "Final build structure:"
-          ls -R .web/_static/
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-        
+          # manifest 파일들 복사
+          echo "Copying manifest files..."
+          cp .web/*.js* dist/ || true
+          
+          echo "Final dist structure:"
+          ls -R dist/
+          
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.web/_static'
+          path: 'dist'
           
       - name: Deploy to GitHub Pages
         id: deployment
