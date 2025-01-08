@@ -32,7 +32,7 @@ jobs:
           
       - name: Build project
         run: |
-          reflex export --frontend-only --no-zip
+          reflex export --no-zip
           echo "Checking build directory structure:"
           ls -R .web/_static/
           
