@@ -33,18 +33,11 @@ jobs:
       - name: Build project
         run: |
           reflex export --frontend-only
+          echo "Checking .web directory structure:"
+          ls -R .web/
           mkdir -p dist
           cp -r .web/* dist/
-          cp .web/index.html dist/
-          cp -r .web/_next dist/
           
-      - name: Debug directory structure
-        run: |
-          echo "Contents of .web directory:"
-          ls -la .web/
-          echo "Contents of dist directory:"
-          ls -la dist/
-        
       - name: Setup Pages
         uses: actions/configure-pages@v4
         
