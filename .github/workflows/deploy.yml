@@ -37,13 +37,24 @@ jobs:
           echo "Checking .web/_static directory structure:"
           ls -R .web/_static/
           
-          # dist 디렉토리 생성 � 파일 복사
-          mkdir -p dist
+          # dist 디렉토리 생성 및 파일 복사
+          mkdir -p dist/_next
           cp -r .web/_static/* dist/
           
-          # basePath 수정을 위한 파일 내용 변경
-          find dist -type f -name "*.html" -exec sed -i 's|/_next/|/harimkang-pages/_next/|g' {} +
-          find dist -type f -name "*.js" -exec sed -i 's|/_next/|/harimkang-pages/_next/|g' {} +
+          # _next 디렉토리 복사 확인
+          if [ -d ".web/_static/_next" ]; then
+            cp -r .web/_static/_next/* dist/_next/
+          fi
+          
+          # HTML 파일의 모든 경로 수정
+          find dist -type f -name "*.html" -exec sed -i 's|"/_next/|"/harimkang-pages/_next/|g' {} +
+          find dist -type f -name "*.html" -exec sed -i "s|'/_next/|'/harimkang-pages/_next/|g" {} +
+          find dist -type f -name "*.html" -exec sed -i 's|href="/_next|href="/harimkang-pages/_next|g' {} +
+          find dist -type f -name "*.html" -exec sed -i 's|src="/_next|src="/harimkang-pages/_next|g' {} +
+          
+          # JavaScript 파일의 경로 수정
+          find dist -type f -name "*.js" -exec sed -i 's|"/_next/|"/harimkang-pages/_next/|g' {} +
+          find dist -type f -name "*.js" -exec sed -i "s|'/_next/|'/harimkang-pages/_next/|g" {} +
           
           echo "Final dist structure:"
           ls -R dist/

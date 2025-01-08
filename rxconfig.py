@@ -11,5 +11,9 @@ config = rx.Config(
     next_config={
         "basePath": "/harimkang-pages",
         "assetPrefix": "/harimkang-pages",
+        "trailingSlash": True,
+        "publicRuntimeConfig": {
+            "basePath": "/harimkang-pages",
+        },
     }
 )
