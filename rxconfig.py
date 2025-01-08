@@ -7,4 +7,9 @@ config = rx.Config(
     build_path=".web",
     static_dir="public",
     env=rx.Env.PROD,
+    route_prefix="/harimkang-pages",
+    next_config={
+        "basePath": "/harimkang-pages",
+        "assetPrefix": "/harimkang-pages",
+    }
 )

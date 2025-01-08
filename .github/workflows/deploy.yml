@@ -37,9 +37,13 @@ jobs:
           echo "Checking .web/_static directory structure:"
           ls -R .web/_static/
           
-          # dist 디렉토리 생성 후 파일 복사
+          # dist 디렉토리 생성 � 파일 복사
           mkdir -p dist
           cp -r .web/_static/* dist/
+          
+          # basePath 수정을 위한 파일 내용 변경
+          find dist -type f -name "*.html" -exec sed -i 's|/_next/|/harimkang-pages/_next/|g' {} +
+          find dist -type f -name "*.js" -exec sed -i 's|/_next/|/harimkang-pages/_next/|g' {} +
           
           echo "Final dist structure:"
           ls -R dist/
