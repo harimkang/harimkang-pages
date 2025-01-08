@@ -159,34 +159,12 @@ def create_project_card(
                 ),
                 rx.button(
                     rx.hstack(
-                        rx.cond(
-                            ProjectState.selected_project == project_id,
-                            rx.icon(
-                                tag="chevron-up",
-                                mr="2",
-                            ),
-                            rx.icon(
-                                tag="info",
-                                mr="2",
-                            ),
-                        ),
-                        rx.text(
-                            rx.cond(
-                                ProjectState.selected_project == project_id,
-                                "Show Less",
-                                "View Details"
-                            ),
-                        ),
+                        rx.icon("info"),
+                        rx.text("View Details"),
                     ),
-                    on_click=ProjectState.toggle_project(project_id),
-                    background_color="rgba(99, 102, 241, 0.1)",
-                    color="white",
-                    padding="0.5rem 1rem",
-                    border_radius="0.375rem",
-                    _hover={
-                        "background_color": "rgba(99, 102, 241, 0.2)",
-                    },
-                    width="fit-content",
+                    on_click=lambda: ProjectState.toggle_project(project_id),
+                    class_name="view-details-button",
+                    color_scheme="blue",
                 ),
                 spacing="3",
                 align_items="start",

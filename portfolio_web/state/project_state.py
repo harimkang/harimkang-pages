@@ -9,17 +9,13 @@ class ProjectState(State):
     # Which tab is selected (development/research)
     selected_tab: str = "development"
     
-    # WebSocket 연결 비활성화
-    async def handle_connect(self):
-        """Handle websocket connection."""
-        pass  # WebSocket 연결 시도를 하지 않음
-    
-    # 추가 설정
     class Config:
         client_connect = False  # 클라이언트 연결 비활성화
+        prevent_initial_call = True  # 초기 서버 호출 방지
     
     def toggle_project(self, project_id: str):
         """Toggle project expansion."""
+        # 클라이언트 사이드에서만 상태 업데이트
         if self.selected_project == project_id:
             self.selected_project = ""
         else:
