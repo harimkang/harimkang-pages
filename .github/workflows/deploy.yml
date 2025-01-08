@@ -34,13 +34,13 @@ jobs:
         run: |
           reflex export --frontend-only --no-zip
           
-          echo "Checking build output structure:"
-          ls -R .web/_static/
+          echo "Checking complete .web directory structure:"
+          ls -R .web/
           
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.web/_static'
+          path: '.web'
           
       - name: Deploy to GitHub Pages
         id: deployment
