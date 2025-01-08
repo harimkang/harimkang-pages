@@ -1,5 +1,5 @@
 import reflex as rx
-from ..utils.styles import create_styled_heading, create_paragraph, create_text
+from ..utils.styles import create_styled_heading
 
 def create_logo_image(alt_text, image_src):
     """Create a logo image with specified dimensions and alt text."""

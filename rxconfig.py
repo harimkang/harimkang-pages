@@ -15,5 +15,7 @@ config = rx.Config(
         "publicRuntimeConfig": {
             "basePath": "/harimkang-pages",
         },
-    }
+    },
+    connect_on_init=False,
+    disable_ws=True,
 )

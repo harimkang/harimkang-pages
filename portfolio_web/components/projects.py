@@ -1,8 +1,7 @@
 import reflex as rx
 from ..utils.styles import (
     create_styled_heading, 
-    create_paragraph, 
-    create_icon, 
+    create_paragraph,
     create_section_heading,
     create_link_with_icon
 )
