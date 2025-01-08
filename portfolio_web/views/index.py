@@ -94,28 +94,35 @@ def index():
         ),
         rx.script(
             """
-            (() => {
-                function initAOS() {
-                    try {
-                        if (window.AOS) {
-                            AOS.init({
-                                duration: 1000,
-                                once: true
-                            });
-                        } else {
-                            setTimeout(initAOS, 100);
-                        }
-                    } catch (e) {
-                        setTimeout(initAOS, 100);
-                    }
-                }
-                
-                if (document.readyState === 'complete') {
-                    initAOS();
+            window.addEventListener('load', function() {
+                console.log('Window loaded, initializing AOS...');
+                if (typeof AOS !== 'undefined') {
+                    AOS.init({
+                        duration: 1000,
+                        once: true,
+                        mirror: false,
+                        offset: 100,
+                        easing: 'ease-in-out',
+                    });
+                    console.log('AOS initialized successfully');
                 } else {
-                    window.addEventListener('load', initAOS);
+                    console.error('AOS not loaded');
                 }
-            })();
+            });
+
+            // Fallback initialization
+            setTimeout(function() {
+                if (typeof AOS !== 'undefined' && !AOS.initialized) {
+                    console.log('Fallback AOS initialization...');
+                    AOS.init({
+                        duration: 1000,
+                        once: true,
+                        mirror: false,
+                        offset: 100,
+                        easing: 'ease-in-out',
+                    });
+                }
+            }, 1000);
             """
         ),
     )
