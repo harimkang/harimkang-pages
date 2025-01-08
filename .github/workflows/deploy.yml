@@ -2,8 +2,8 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ "main" ]  # main 브랜치에 push할 때 실행
-  workflow_dispatch:      # 수동으로도 실행 가능
+    branches: [ "main" ]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -31,7 +31,19 @@ jobs:
           pip install reflex
           
       - name: Build project
-        run: reflex export --frontend-only
+        run: |
+          reflex export --frontend-only
+          mkdir -p dist
+          cp -r .web/* dist/
+          cp .web/index.html dist/
+          cp -r .web/_next dist/
+          
+      - name: Debug directory structure
+        run: |
+          echo "Contents of .web directory:"
+          ls -la .web/
+          echo "Contents of dist directory:"
+          ls -la dist/
         
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -39,7 +51,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.web'
+          path: 'dist'
           
       - name: Deploy to GitHub Pages
         id: deployment
