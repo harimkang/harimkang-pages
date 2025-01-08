@@ -45,84 +45,31 @@ def create_main_content():
     )
 
 
-def index():
+def index() -> rx.Component:
     """Render the complete portfolio page with all necessary scripts and styles."""
-    return rx.fragment(
-        rx.script(src="https://cdn.tailwindcss.com"),
-        rx.el.link(
-            rel="stylesheet",
-            href="https://unpkg.com/aos@next/dist/aos.css",
-        ),
-        rx.script(
-            src="https://unpkg.com/aos@next/dist/aos.js",
-        ),
-        rx.el.style(
-            """
-            @font-face {
-                font-family: 'LucideIcons';
-                src: url(https://unpkg.com/lucide-static@latest/font/Lucide.ttf) format('truetype');
-            }
-            html {
-                scroll-behavior: smooth;
-            }
-            """
-        ),
+    return rx.box(
+        rx.script(src="/js/project.js"),
         rx.box(
-            rx.box(
-                create_navigation_menu(),
-                width="100%",
-                style=rx.breakpoints(
-                    {
-                        "640px": {"max-width": "640px"},
-                        "768px": {"max-width": "768px"},
-                        "1024px": {"max-width": "1024px"},
-                        "1280px": {"max-width": "1280px"},
-                        "1536px": {"max-width": "1536px"},
-                    }
-                ),
-                margin_left="auto",
-                margin_right="auto",
-                padding_left="1rem",
-                padding_right="1rem",
-                padding_top="2rem",
-                padding_bottom="2rem",
+            create_navigation_menu(),
+            width="100%",
+            style=rx.breakpoints(
+                {
+                    "640px": {"max-width": "640px"},
+                    "768px": {"max-width": "768px"},
+                    "1024px": {"max-width": "1024px"},
+                    "1280px": {"max-width": "1280px"},
+                    "1536px": {"max-width": "1536px"},
+                }
             ),
-            create_main_content(),
-            background_color="#111827",
-            font_family='system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
-            color="#F3F4F6",
+            margin_left="auto",
+            margin_right="auto",
+            padding_left="1rem",
+            padding_right="1rem",
+            padding_top="2rem",
+            padding_bottom="2rem",
         ),
-        rx.script(
-            """
-            window.addEventListener('load', function() {
-                console.log('Window loaded, initializing AOS...');
-                if (typeof AOS !== 'undefined') {
-                    AOS.init({
-                        duration: 1000,
-                        once: true,
-                        mirror: false,
-                        offset: 100,
-                        easing: 'ease-in-out',
-                    });
-                    console.log('AOS initialized successfully');
-                } else {
-                    console.error('AOS not loaded');
-                }
-            });
-
-            // Fallback initialization
-            setTimeout(function() {
-                if (typeof AOS !== 'undefined' && !AOS.initialized) {
-                    console.log('Fallback AOS initialization...');
-                    AOS.init({
-                        duration: 1000,
-                        once: true,
-                        mirror: false,
-                        offset: 100,
-                        easing: 'ease-in-out',
-                    });
-                }
-            }, 1000);
-            """
-        ),
+        create_main_content(),
+        background_color="#111827",
+        font_family='system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
+        color="#F3F4F6",
     )

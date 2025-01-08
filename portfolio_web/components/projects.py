@@ -19,7 +19,7 @@ def create_technologies_section(technologies):
         margin_bottom="0.5rem",
     )
 
-def create_project_details(project_details: dict = None):
+def create_project_details(project_id: str, project_details: dict = None):
     """Create the detailed content section of a project."""
     if project_details is None:
         project_details = {
@@ -122,6 +122,12 @@ def create_project_details(project_details: dict = None):
         align_items="start",
         width="100%",
         spacing="4",
+        id=f"project-{project_id}-details",
+        display=rx.cond(
+            ProjectState.selected_project == project_id,
+            "block",
+            "none"
+        ),
     )
 
 def create_project_card(
@@ -159,12 +165,29 @@ def create_project_card(
                 ),
                 rx.button(
                     rx.hstack(
-                        rx.icon("info"),
-                        rx.text("View Details"),
+                        rx.cond(
+                            ProjectState.selected_project == project_id,
+                            rx.icon(tag="chevron-up"),
+                            rx.icon(tag="info"),
+                        ),
+                        rx.text(
+                            rx.cond(
+                                ProjectState.selected_project == project_id,
+                                "Show Less",
+                                "View Details",
+                            )
+                        ),
                     ),
-                    on_click=lambda: ProjectState.toggle_project(project_id),
-                    class_name="view-details-button",
-                    color_scheme="blue",
+                    on_click=ProjectState.toggle_project(project_id),
+                    background_color="#1F2937",
+                    color="white",
+                    padding="0.5rem 1rem",
+                    border_radius="0.375rem",
+                    border="1px solid rgba(99, 102, 241, 0.2)",
+                    _hover={
+                        "background_color": "rgba(99, 102, 241, 0.1)",
+                        "border_color": "rgba(99, 102, 241, 0.5)",
+                    },
                 ),
                 spacing="3",
                 align_items="start",
@@ -176,7 +199,7 @@ def create_project_card(
             ),
             rx.cond(
                 (ProjectState.selected_project == project_id) & (project_details is not None),
-                create_project_details(project_details),
+                create_project_details(project_id, project_details),
             ),
             height="100%",
             spacing="4",
