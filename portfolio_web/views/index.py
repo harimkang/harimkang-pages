@@ -48,7 +48,6 @@ def create_main_content():
 def index() -> rx.Component:
     """Render the complete portfolio page with all necessary scripts and styles."""
     return rx.box(
-        rx.script(src="/js/project.js"),
         rx.box(
             create_navigation_menu(),
             width="100%",
